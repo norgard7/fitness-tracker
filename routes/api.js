@@ -23,8 +23,17 @@ router.get("/api/workouts", (req, res) => {
 			res.json(err);
 		});
 });
-// need another get request 
 
+router.put("/api/workouts/:id", ({body, params}, res) => {
+  db.findByIdAndUpdate(params.id, {$push: 
+  {excerises: body}})
+  .then((dbWorkout) => {
+    res.json(dbWorkout);
+  })
+  .catch((err) => {
+    res.json(err);
+  });
+})
 
 
 router.get("/api/workouts", (req, res) => {
