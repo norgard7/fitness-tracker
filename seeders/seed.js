@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 const db = require('../models/workout');
 
-
+mongoose.connect('mongodb://localhost/workout', {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
 
 const workoutSeed = [
   {
     day: new Date().setDate(new Date().getDate()-10),
-    exercise: [
+    exercises: [
       {
         type: "resistance",
         name: "Bicep Curl",

@@ -9,7 +9,7 @@ const workoutSchema = new Schema({
         type: Date,
         default: Date.now
       },
-    exercise: [{
+    exercises: [{
       type: {
         type: String,
         trim: true,
@@ -43,5 +43,3 @@ const workoutSchema = new Schema({
 
 const Workout = mongoose.model("Workout", workoutSchema);
 module.exports = Workout;
-
-

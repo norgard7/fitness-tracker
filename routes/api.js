@@ -30,12 +30,11 @@ router.get("/api/workouts", (req, res) => {
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-  // console.log('PARAMS', req.params)
-  db.findByIdAndUpdate(
-      req.params.id,
-      { $push: { exercise: req.body } },
-      { new: true, runValidators: true }
-  )
+  db.update({ _id: 
+      req.params.id},
+      { $push: {exercises: req.body }}
+      ) 
+    //   { new: true, runValidators: true }
       .then((workout) => {
           res.json(workout)
       })
@@ -43,6 +42,20 @@ router.put("/api/workouts/:id", (req, res) => {
           res.json(err)
       })
 });
+// router.put("/api/workouts/:id", (req, res) => {
+//   db.findByIdAndUpdate({ _id: 
+//       req.params.id},
+//       { exercises: req.body }) 
+//       { new: true, runValidators: true }
+//       .then((workout) => {
+//           res.json(workout)
+//       })
+//       .catch((err) => {
+//           res.json(err)
+//       })
+// });
+
+
 router.get(`/api/workouts/range`, (req, res) => {
   db.aggregate([
       {
@@ -53,9 +66,11 @@ router.get(`/api/workouts/range`, (req, res) => {
                   { $sum: '$exercises.weight' }
           }
       }
-  ])
-      .limit(10)
+  ]) 
+    .sort({ day: -1})  
+    .limit(7)
       .then((workout) => {
+          console.log(workout)
           res.json(workout)
       })
       .catch((err) => {
@@ -64,9 +79,10 @@ router.get(`/api/workouts/range`, (req, res) => {
 });
 module.exports = router;  
             
+            
 
 
-  //  original code
+   
 
 // // POST workout new workout
 // router.post("/api/workouts", ({ body }, res) => {
@@ -81,10 +97,10 @@ module.exports = router;
 
 // // All workouts
 // // get last workout
-// router.get("/api/workouts", (req, res) => {
+// router.put("/api/workouts", (req, res) => {
 // 	db.find()
-// 		.then((dbWorkout) => {
-// 			res.json(dbWorkout);
+// 		.then((workout) => {
+// 			res.json(workout);
 // 		})
 // 		.catch((err) => {
 // 			res.json(err);
