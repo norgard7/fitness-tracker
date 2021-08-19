@@ -18,7 +18,7 @@ app.use(express.static("public"));
 // });
 
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/db',
+  process.env.MONGODB_URI || 'mongodb://localhost/workout',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -26,6 +26,7 @@ mongoose.connect(
     useFindAndModify: false
   }
 );
+
 
 // routes
 app.use(require("./routes/api.js"));
